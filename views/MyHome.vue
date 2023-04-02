@@ -1,15 +1,16 @@
 <template>
     <div>
-        <h1>home</h1>
+        <writing-area></writing-area>
     </div>
 </template>
 
 <script>
-    export default {
-        
+import WritingArea from "../src/components/Writings/WritingArea.vue"
+export default {
+    components: {
+        WritingArea
     }
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
