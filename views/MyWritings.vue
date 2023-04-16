@@ -1,12 +1,15 @@
 <template>
     <div>
-        <h1>writings</h1>
+        <article-card></article-card>
     </div>
 </template>
 
 <script>
+import ArticleCard from '@/components/Writings/ArticleCard.vue';
 export default {
-
+    components: {
+        ArticleCard
+    }
 }
 </script>
 
