@@ -31,7 +31,6 @@
     </div>
 </template>
 <script>
-// import { getResponse } from '@/index.js'
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 export default {
@@ -43,11 +42,11 @@ export default {
             grammarRes: '',
             polishRes: '',
             loading: false,
-            collection: {
-                before: '',
-                after:''
-            },
-            collectedItems: []
+            collectedItem: {
+                input: '',
+                output: '',
+                id:''
+            }
         }
     },
     methods: {
@@ -79,22 +78,15 @@ export default {
             const content = `输出下面语句进行语法改正后的结果：${this.form.text}`;
             this.grammarRes = await this.getResponse(content);
             this.loading = false;
-            this.collection = { before: JSON.parse(JSON.stringify(this.form.text)), after: JSON.parse(JSON.stringify(this.grammarRes)) }
-            console.log("collection "+ this.collection)
+            this.collectedItem.input = this.form.text;
+            this.collectedItem.output = this.grammarRes;
+            this.collectedItem.id = new Date().toString();
+            console.log("collection "+ this.collectedItem)
         },
-        // async onSubmitPolish() {
-        //     this.loading = true;
-        //     const content = `使用高级词汇润色以下语段：${this.form.text}`;
-        //     this.polishRes = await this.getResponse(content);
-        //     this.loading = false;
-        // },
+       
         collect() {
-            if (!this.collectedItems.includes(this.collection)) {
-                this.collectedItems.push(this.collection)
-            }
-            console.log(this.collection)
-
-            console.log(this.collectedItems)
+            this.$store.dispatch('collections/addToCollections', this.collectedItem)
+            
         }
 
     }

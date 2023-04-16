@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import WritingArea from "../src/components/Writings/WritingArea.vue"
+import WritingArea from "@/components/Writings/WritingArea.vue"
 export default {
     components: {
         WritingArea
