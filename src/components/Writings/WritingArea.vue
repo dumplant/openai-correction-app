@@ -3,21 +3,26 @@
         <el-row>
             <el-col :span="12">
                 <div class="grid-content bg-purple">
-                    <el-input type="textarea" v-model="form.text" resize="none" placeholder="请输入..." rows="10" style="font-size: 1.32rem;"></el-input>
+                    <el-input type="textarea" v-model="form.text" resize="none" placeholder="请输入..." rows="10" style="font-size: 1.32rem;" spellcheck ="false"></el-input>
                 </div>
                 <el-button type="primary" @click="onSubmitGrammar" class="submitBtn" :disabled="!!!form.text">提交</el-button>
 
             </el-col>
             <el-col :span="12">
                 <div class="grid-content bg-purple-light">
-                    <el-tabs type="border-card">
+                    <!-- <el-tabs type="border-card">
                         <el-tab-pane label="语法检查" v-loading="loading" style="height: 16rem;">
                             <div style="height: 100%;">
                                 <div style="white-space: pre-wrap;" v-if="!!grammarRes" v-html="diffHtml"></div>
                                 <el-button type="warning" icon="el-icon-star-off" circle v-if="!!grammarRes" class="collectBtn" size="mini" @click="collect"></el-button>
                             </div>
                         </el-tab-pane>
-                    </el-tabs>
+                    </el-tabs> -->
+                    <div class="outputBox" v-html="diffHtml" v-loading="loading" contenteditable="true" spellcheck ="false">
+                    </div>
+                    <!-- <div class="outputTextarea" style="white-space: pre-wrap;" v-if="!!grammarRes"  ></div> -->
+                    <el-button type="warning" icon="el-icon-star-off" circle v-if="!!grammarRes" class="collectBtn" size="mini" @click="collect"></el-button>
+
                 </div>
             </el-col>
         </el-row>
@@ -39,9 +44,10 @@ export default {
             collectedItem: {
                 input: '',
                 output: '',
+                diffHtml: '',
                 id: ''
             },
-            diffHtml:''
+            diffHtml: ''
         }
     },
     methods: {
@@ -78,6 +84,7 @@ export default {
             this.collectedItem.output = this.grammarRes;
             this.collectedItem.id = new Date().toString();
             this.diffHtml = getHighLightDiff(this.form.text, this.grammarRes);
+            this.collectedItem.diffHtml = this.diffHtml;
         },
 
         collect() {
@@ -104,6 +111,25 @@ body {
 .submitBtn {
     margin-left: 2rem;
 }
+.outputBox {
+    font-family: monospace;
+    background: #feffff;
+    overflow: auto; 
+    height: 19rem;
+    font-size: 1.32rem;
+    display: block;
+    padding: 5px 15px;
+    line-height: 1.5;
+    box-sizing: border-box;
+    width: 100%;
+    color: #606266;
+    background-color: #FFF;
+    background-image: none;
+    border: 1px solid #DCDFE6;
+    border-radius: 4px;
+    transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+}
+
 
 .collectBtn {
     position: absolute;
@@ -121,8 +147,6 @@ body {
 
 .el-col {
     border-radius: 4px;
-
-
 }
 
 .bg-purple-dark {
@@ -143,9 +167,10 @@ body {
     height: 20rem;
     width: 90%;
     margin: 1rem auto;
+    position: relative;
 
     &> :first-child {
-        height: 100%;
+        height: 102%;
     }
 
 }

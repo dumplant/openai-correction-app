@@ -3,12 +3,13 @@
         <el-button style="float: right; padding: 3px 0" type="text" @click="deleteItem">删除</el-button>
 
         <div class="text item">
-            <span> {{ '原始：' + input }}
+            <span> 修改前：
+            </span>
+            <span> {{ input }}
             </span>
             <el-divider></el-divider>
-            <span>
-                {{ '批改：' + output }}
-
+            <span> 修改后：
+                </span><span v-html="diffHtml">
             </span>
         </div>
     </el-card>
@@ -17,7 +18,7 @@
 <script>
 export default {
     name: 'collection-item',
-    props: ['input', 'output', 'id'],
+    props: ['input', 'output', 'diffHtml', 'id'],
 
     data() {
         return {
@@ -40,7 +41,8 @@ export default {
 .text {
     width: 95%;
 }
-.el-divider{
+
+.el-divider {
     margin: 20px 0;
 }
 </style>

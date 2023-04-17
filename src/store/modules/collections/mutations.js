@@ -1,7 +1,7 @@
 export default {
   addToCollections(state, payload) {
     if (!state.collections.find((item) => item.id === payload.id))
-      state.collections.push(payload);
+      state.collections.unshift(payload);
   },
   removeFromCollections(state, payload) {
     console.log("payload:" + payload);

@@ -3,6 +3,7 @@ export default {
     const item = {
       input: data.input,
       output: data.output,
+      diffHtml: data.diffHtml,
       id: data.id,
     };
 
