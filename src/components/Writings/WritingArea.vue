@@ -45,7 +45,7 @@ export default {
             collectedItem: {
                 input: '',
                 output: '',
-                id:''
+                id: ''
             }
         }
     },
@@ -81,12 +81,18 @@ export default {
             this.collectedItem.input = this.form.text;
             this.collectedItem.output = this.grammarRes;
             this.collectedItem.id = new Date().toString();
-            console.log("collection "+ this.collectedItem)
+            console.log("collection " + this.collectedItem)
         },
-       
+
         collect() {
-            this.$store.dispatch('collections/addToCollections', this.collectedItem)
-            
+            if (this.collectedItem.input != '' && this.collectedItem.output != '') {
+                this.$store.dispatch('collections/addToCollections', this.collectedItem)
+                this.$message({
+                    message: '收藏成功',
+                    type: 'success'
+                });
+            }
+
         }
 
     }
