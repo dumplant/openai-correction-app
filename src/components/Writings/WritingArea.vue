@@ -3,27 +3,24 @@
         <el-row>
             <el-col :span="12">
                 <div class="grid-content bg-purple">
-                    <el-input type="textarea" v-model="form.text" resize="none" placeholder="请输入..." rows="10" style="font-size: 1.32rem;" spellcheck ="false"></el-input>
+                    <el-input type="textarea" v-model="form.text" resize="none" placeholder="请输入..." rows="10" style="font-size: 1.32rem;" spellcheck="false"></el-input>
                 </div>
                 <el-button type="primary" @click="onSubmitGrammar" class="submitBtn" :disabled="!!!form.text">提交</el-button>
 
             </el-col>
             <el-col :span="12">
                 <div class="grid-content bg-purple-light">
-                    <!-- <el-tabs type="border-card">
-                        <el-tab-pane label="语法检查" v-loading="loading" style="height: 16rem;">
-                            <div style="height: 100%;">
-                                <div style="white-space: pre-wrap;" v-if="!!grammarRes" v-html="diffHtml"></div>
-                                <el-button type="warning" icon="el-icon-star-off" circle v-if="!!grammarRes" class="collectBtn" size="mini" @click="collect"></el-button>
-                            </div>
-                        </el-tab-pane>
-                    </el-tabs> -->
-                    <div class="outputBox" v-html="diffHtml" v-loading="loading" contenteditable="true" spellcheck ="false">
+                    <div class="outputBox" v-html="diffHtml" v-loading="loading" contenteditable="true" spellcheck="false">
                     </div>
                     <!-- <div class="outputTextarea" style="white-space: pre-wrap;" v-if="!!grammarRes"  ></div> -->
-                    <el-button type="warning" icon="el-icon-star-off" circle v-if="!!grammarRes" class="collectBtn" size="mini" @click="collect"></el-button>
+                    <div class="buttonGroup" v-if="!!grammarRes">
+                        <el-button type="primary" circle icon="el-icon-document-copy" class="collectBtn" size="small" @click="onCopy(grammarRes)"></el-button>
+                        <el-button type="warning" circle icon="el-icon-star-off" class="collectBtn" size="small" @click="collect"></el-button>
 
+                    </div>
                 </div>
+
+
             </el-col>
         </el-row>
     </div>
@@ -38,7 +35,7 @@ export default {
             form: {
                 text: ''
             },
-            grammarRes: '',
+            grammarRes: 'asd',
             polishRes: '',
             loading: false,
             collectedItem: {
@@ -86,7 +83,20 @@ export default {
             this.diffHtml = getHighLightDiff(this.form.text, this.grammarRes);
             this.collectedItem.diffHtml = this.diffHtml;
         },
+        onCopy(data) {
+            let oInput = document.createElement("input");
+            oInput.value = data;
+            document.body.appendChild(oInput);
+            oInput.select();
+            document.execCommand("Copy");
+            this.$message({
+                message: "复制成功",
+                type: "success"
+            });
+            oInput.remove();
+            
 
+        },
         collect() {
             if (this.collectedItem.input != '' && this.collectedItem.output != '') {
                 this.$store.dispatch('collections/addToCollections', this.collectedItem)
@@ -111,10 +121,11 @@ body {
 .submitBtn {
     margin-left: 2rem;
 }
+
 .outputBox {
     font-family: monospace;
     background: #feffff;
-    overflow: auto; 
+    overflow: auto;
     height: 19rem;
     font-size: 1.32rem;
     display: block;
@@ -130,11 +141,18 @@ body {
     transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
 }
 
+.buttonGroup {
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
 
 .collectBtn {
-    position: absolute;
-    right: 10px;
-    bottom: 15px;
+    // position: absolute;
+    // bottom: -50px;
+    // right: 15px;
 }
 
 .el-row {
@@ -167,7 +185,6 @@ body {
     height: 20rem;
     width: 90%;
     margin: 1rem auto;
-    position: relative;
 
     &> :first-child {
         height: 102%;

@@ -7,6 +7,7 @@ import store from "./store/index.js";
 
 
 Vue.config.productionTip = false;
+
 Vue.use(ElementUI);
 
 new Vue({

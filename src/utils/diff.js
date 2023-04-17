@@ -29,7 +29,8 @@ export const getHighLightDiff = (oldStr, str) => {
   const diff = Diff.diffWords(oldStr, str);
   //console.log(diff)
   var result = new StringBuffer();
-  diff.forEach((part) => {
+    diff.forEach((part) => {
+      console.log(part)
     if (part.added) {
       //文字新增，红色
       result.append("<span style='background:#40a0ff84'>");
