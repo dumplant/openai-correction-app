@@ -1,7 +1,7 @@
 <template>
     <div>
         <collection-item v-for="item in items" :key="item.id" :id="item.id" :input="item.input" :output="item.output"></collection-item>
-        <p v-if="!hasCollections">暂无收藏</p>
+        <el-empty v-if="!hasCollections" description="暂无收藏"></el-empty>
     </div>
 </template>
 

@@ -8,7 +8,8 @@ export default {
     return {
       collections: [
         {
-          input: "0 I have a apple",
+          input:
+            "0 I have a apple I have a apple I have a appleI have a apple I have a apple I have a apple I have a appleI have a apple I have a apple I have a apple I have a appleI have a apple",
           output: "0 I have an apple",
           id: "0",
         },
