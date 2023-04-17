@@ -13,17 +13,10 @@
                     <el-tabs type="border-card">
                         <el-tab-pane label="语法检查" v-loading="loading" style="height: 16rem;">
                             <div style="height: 100%;">
-                                <div style="white-space: pre-wrap;" v-if="!!grammarRes">{{ grammarRes }}</div>
+                                <div style="white-space: pre-wrap;" v-if="!!grammarRes" v-html="diffHtml"></div>
                                 <el-button type="warning" icon="el-icon-star-off" circle v-if="!!grammarRes" class="collectBtn" size="mini" @click="collect"></el-button>
                             </div>
                         </el-tab-pane>
-                        <!-- <el-tab-pane label="润色" v-loading="loading" style="height: 16rem;">
-                            <div style="height: 100%;">
-                                <el-button type="text" @click="onSubmitPolish" v-if="!!!polishRes" class="midBtn" :disabled="!!!form.text">点击生成</el-button>
-                                <div style="white-space: pre-wrap;" v-else-if="!!polishRes">{{ polishRes }}</div>
-                                <el-button type="warning" icon="el-icon-star-off" circle v-if="!!polishRes" class="collectBtn" size="mini"></el-button>
-                            </div>
-                        </el-tab-pane> -->
                     </el-tabs>
                 </div>
             </el-col>
@@ -33,6 +26,7 @@
 <script>
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import { getHighLightDiff } from "@/utils/diff";
 export default {
     data() {
         return {
@@ -46,10 +40,12 @@ export default {
                 input: '',
                 output: '',
                 id: ''
-            }
+            },
+            diffHtml:''
         }
     },
     methods: {
+        getHighLightDiff,
         async getResponse(content) {
             const data = JSON.stringify({
                 apiKey: process.env.VUE_APP_OPENAI_API_KEY,
@@ -81,7 +77,7 @@ export default {
             this.collectedItem.input = this.form.text;
             this.collectedItem.output = this.grammarRes;
             this.collectedItem.id = new Date().toString();
-            console.log("collection " + this.collectedItem)
+            this.diffHtml = getHighLightDiff(this.form.text, this.grammarRes);
         },
 
         collect() {
