@@ -10,13 +10,13 @@
             </el-col>
             <el-col :span="12">
                 <div class="grid-content bg-purple-light">
-                    <div class="outputBox" v-html="diffHtml" v-loading="loading" contenteditable="true" spellcheck="false">
+                    <div class="outputBox" v-html="content" v-loading="loading" contenteditable="true" spellcheck="false">
                     </div>
                     <!-- <div class="outputTextarea" style="white-space: pre-wrap;" v-if="!!grammarRes"  ></div> -->
                     <div class="buttonGroup" v-if="!!grammarRes">
-                        <el-button type="primary" circle icon="el-icon-document-copy" class="collectBtn" size="small" @click="onCopy(grammarRes)"></el-button>
-                        <el-button type="warning" circle icon="el-icon-star-off" class="collectBtn" size="small" @click="collect"></el-button>
-
+                        <el-button type="primary" circle icon="el-icon-document-copy" size="small" @click="onCopy(grammarRes)"></el-button>
+                        <el-button type="warning" circle icon="el-icon-star-off" size="small" @click="collect"></el-button>
+                        <el-button type="success" circle icon="el-icon-view" size="small" @click="switchContent"></el-button>
                     </div>
                 </div>
 
@@ -35,8 +35,7 @@ export default {
             form: {
                 text: ''
             },
-            grammarRes: 'asd',
-            polishRes: '',
+            grammarRes: '',
             loading: false,
             collectedItem: {
                 input: '',
@@ -44,7 +43,17 @@ export default {
                 diffHtml: '',
                 id: ''
             },
-            diffHtml: ''
+            diffHtml: '',
+            showDiff: true,
+        }
+    },
+    computed: {
+        content() {
+            if (this.showDiff) {
+                return this.diffHtml;
+            } else {
+                return this.grammarRes;
+            }
         }
     },
     methods: {
@@ -83,6 +92,9 @@ export default {
             this.diffHtml = getHighLightDiff(this.form.text, this.grammarRes);
             this.collectedItem.diffHtml = this.diffHtml;
         },
+        switchContent() {
+            this.showDiff = !this.showDiff;
+        },
         onCopy(data) {
             let oInput = document.createElement("input");
             oInput.value = data;
@@ -94,7 +106,7 @@ export default {
                 type: "success"
             });
             oInput.remove();
-            
+
 
         },
         collect() {
@@ -149,11 +161,7 @@ body {
     justify-content: flex-end;
 }
 
-.collectBtn {
-    // position: absolute;
-    // bottom: -50px;
-    // right: 15px;
-}
+
 
 .el-row {
     margin-bottom: 20px;
