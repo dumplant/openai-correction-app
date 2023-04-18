@@ -1,5 +1,5 @@
 # openai-correction-app
-![picture 1](../images/931dc03e2391aa4a31e7b38eeba35c4364cceb8f61206b221e29a6d53c4d9183.png)  
+![picture 1](https://raw.githubusercontent.com/dumplant/openai-correction-app/main/public/931dc03e2391aa4a31e7b38eeba35c4364cceb8f61206b221e29a6d53c4d9183.png)  
 
 ## Project setup
 ```
