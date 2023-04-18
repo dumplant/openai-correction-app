@@ -6,7 +6,6 @@
                     <el-input type="textarea" v-model="form.text" resize="none" placeholder="请输入..." rows="10" style="font-size: 1.32rem;" spellcheck="false"></el-input>
                 </div>
                 <el-button type="primary" @click="onSubmitGrammar" class="submitBtn" :disabled="!!!form.text">提交</el-button>
-
             </el-col>
             <el-col :span="12">
                 <div class="grid-content bg-purple-light">
@@ -14,13 +13,11 @@
                     </div>
                     <!-- <div class="outputTextarea" style="white-space: pre-wrap;" v-if="!!grammarRes"  ></div> -->
                     <div class="buttonGroup" v-if="!!grammarRes">
-                        <el-button type="primary" circle icon="el-icon-document-copy" size="small" @click="onCopy(grammarRes)"></el-button>
-                        <el-button type="warning" circle icon="el-icon-star-off" size="small" @click="collect"></el-button>
-                        <el-button type="success" circle icon="el-icon-view" size="small" @click="switchContent"></el-button>
+                        <el-button type="primary" title="复制" circle icon="el-icon-document-copy" size="small" @click="onCopy"></el-button>
+                        <el-button type="warning" title="收藏" circle icon="el-icon-star-off" size="small" @click="collect"></el-button>
+                        <el-button type="success" title="显示差异" circle icon="el-icon-view" size="small" @click="switchContent"></el-button>
                     </div>
                 </div>
-
-
             </el-col>
         </el-row>
     </div>
@@ -95,19 +92,14 @@ export default {
         switchContent() {
             this.showDiff = !this.showDiff;
         },
-        onCopy(data) {
-            let oInput = document.createElement("input");
-            oInput.value = data;
-            document.body.appendChild(oInput);
-            oInput.select();
+        onCopy() {
+            let output = document.querySelector('.outputBox');
+            output.select();
             document.execCommand("Copy");
             this.$message({
                 message: "复制成功",
                 type: "success"
             });
-            oInput.remove();
-
-
         },
         collect() {
             if (this.collectedItem.input != '' && this.collectedItem.output != '') {
