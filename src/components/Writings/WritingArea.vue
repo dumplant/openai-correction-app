@@ -23,9 +23,10 @@
     </div>
 </template>
 <script>
-import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
+// import axios from 'axios';
+// import { v4 as uuidv4 } from 'uuid';
 import { getHighLightDiff } from "@/utils/diff";
+import getResponse from '@/utils/GetResponse'
 export default {
     data() {
         return {
@@ -55,33 +56,34 @@ export default {
     },
     methods: {
         getHighLightDiff,
-        async getResponse(content) {
-            const data = JSON.stringify({
-                apiKey: process.env.VUE_APP_OPENAI_API_KEY,
-                sessionId: uuidv4(),
-                content: content,
-            });
-            var config = {
-                method: "post",
-                maxBodyLength: Infinity,
-                url: "/pro/chat/completions",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                data: data,
-            };
-            try {
-                const response = await axios(config);
-                return response.data.data;
-            } catch (error) {
-                return error;
-            }
-        },
+        // async getResponse(content) {
+        //     const data = JSON.stringify({
+        //         apiKey: process.env.VUE_APP_OPENAI_API_KEY,
+        //         sessionId: uuidv4(),
+        //         content: content,
+        //     });
+        //     var config = {
+        //         method: "post",
+        //         maxBodyLength: Infinity,
+        //         url: "/pro/chat/completions",
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //         },
+        //         data: data,
+        //     };
+        //     try {
+        //         const response = await axios(config);
+        //         return response.data.data;
+        //     } catch (error) {
+        //         return error;
+        //     }
+        // },
         async onSubmitGrammar() {
             this.grammarRes = '';
             this.loading = true;
-            const content = `输出下面语句进行语法改正后的结果：${this.form.text}`;
-            this.grammarRes = await this.getResponse(content);
+            // const content = `输出下面语句进行语法改正后的结果：${this.form.text}`;
+            this.grammarRes = await getResponse(this.form.text);
+            console.log(this.grammarRes)
             this.loading = false;
             this.collectedItem.input = this.form.text;
             this.collectedItem.output = this.grammarRes;
