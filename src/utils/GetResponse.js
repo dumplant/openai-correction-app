@@ -1,6 +1,6 @@
 // import fetch from 'isomorphic-unfetch';
 
-const getResponse = async (content, targetLanguage) => {
+const getResponse = async (content) => {
   console.log('content:' + content);
   const response = await fetch('https://api.openai-proxy.com/v1/completions', {
     method: 'POST',
@@ -9,7 +9,8 @@ const getResponse = async (content, targetLanguage) => {
       Authorization: `Bearer ${process.env.VUE_APP_OPENAI_API_KEY}`,
     },
     body: JSON.stringify({
-      prompt: `translate this content into ${targetLanguage}: "${content}"`,
+      prompt: `Output the corrected version of this statement: "${content}"`,
+      // prompt: `translate this content into ${targetLanguage}: "${content}"`,
       temperature: 0.5,
       max_tokens: 2048,
       n: 1,
@@ -29,7 +30,11 @@ const getResponse = async (content, targetLanguage) => {
   }
   console.log(data);
 
-  return data.choices[0].text.trim();
+  let res = data.choices[0].text.trim();
+  if (res[0] === `"` && res[res.length - 1] === `"`) {
+    res = res.slice(1, -1);
+  }
+  return res;
 };
 
 export default getResponse;

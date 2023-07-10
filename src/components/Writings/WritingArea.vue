@@ -4,6 +4,9 @@
             <el-col :span="12">
                 <div class="grid-content bg-purple">
                     <el-input type="textarea" v-model="form.text" resize="none" placeholder="请输入..." rows="10" style="font-size: 1.32rem;" spellcheck="false"></el-input>
+                    <!-- <el-upload class="upload-demo" drag action="#" multiple>
+                        <div class="el-upload__text">键入输入，或将文件拖拽到此处</div>
+                    </el-upload> -->
                 </div>
                 <el-button type="primary" @click="onSubmitGrammar" class="submitBtn" :disabled="!!!form.text">提交</el-button>
             </el-col>
@@ -81,9 +84,7 @@ export default {
         async onSubmitGrammar() {
             this.grammarRes = '';
             this.loading = true;
-            // const content = `输出下面语句进行语法改正后的结果：${this.form.text}`;
             this.grammarRes = await getResponse(this.form.text);
-            console.log(this.grammarRes)
             this.loading = false;
             this.collectedItem.input = this.form.text;
             this.collectedItem.output = this.grammarRes;
