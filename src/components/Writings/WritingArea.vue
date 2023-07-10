@@ -26,8 +26,7 @@
     </div>
 </template>
 <script>
-// import axios from 'axios';
-// import { v4 as uuidv4 } from 'uuid';
+
 import { getHighLightDiff } from "@/utils/diff";
 import getResponse from '@/utils/GetResponse'
 export default {
@@ -59,28 +58,7 @@ export default {
     },
     methods: {
         getHighLightDiff,
-        // async getResponse(content) {
-        //     const data = JSON.stringify({
-        //         apiKey: process.env.VUE_APP_OPENAI_API_KEY,
-        //         sessionId: uuidv4(),
-        //         content: content,
-        //     });
-        //     var config = {
-        //         method: "post",
-        //         maxBodyLength: Infinity,
-        //         url: "/pro/chat/completions",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         data: data,
-        //     };
-        //     try {
-        //         const response = await axios(config);
-        //         return response.data.data;
-        //     } catch (error) {
-        //         return error;
-        //     }
-        // },
+
         async onSubmitGrammar() {
             this.grammarRes = '';
             this.loading = true;

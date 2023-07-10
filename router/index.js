@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import TheMain from '@/views/TheMain.vue';
+import TheMain from '@/layout/TheMain.vue';
 import MyHome from '@/views/MyHome.vue';
 import MyCollections from '@/views/MyCollections.vue';
 
