@@ -11,7 +11,7 @@ const getResponse = async (type, content) => {
     body: JSON.stringify({
       prompt: `假设你是一名${type}英语作文考官,这是用户提供的一篇${type}作文：${content}。
 你有两个任务: 1. 检查单词拼写、纠正标点符号、修正语法错误,为用户提供一个修改全文版本;2. 为用户的作文打分,分数的总分为9分,请从词汇能力、句子能力、篇章能力三个方面给用户打分。
-请以json格式给出回答, json的key分别为: polishedVersion、totalScore、vpScore、vpEvaluation、spScore、spEvaluation、vpScore、vpEvaluation, value分别为修改过的全文版本、总分分数、词汇能力得分、词汇能力评价、句子能力得分、句子能力评价、篇章能力得分、篇章能力评价`,
+请以json格式给出回答, json的key分别为: polishedVersion、totalScore、vpScore、vpEvaluation、spScore、spEvaluation、epScore、epEvaluation, value分别为修改过的全文版本、总分分数、词汇能力得分、词汇能力评价、句子能力得分、句子能力评价、篇章能力得分、篇章能力评价`,
       // prompt: `Output the corrected version of this statement: "${content}"`,
       // prompt: `translate this content into ${targetLanguage}: "${content}"`,
       temperature: 0.5,

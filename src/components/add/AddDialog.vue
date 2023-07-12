@@ -29,7 +29,7 @@
           </el-row>
         </el-col>
         <el-col :span="12">
-          <ResponseArea :gradeRes="gradeRes" />
+          <ResponseArea :gradeRes="gradeRes" :orginalVersion="form.textarea" />
         </el-col>
       </div>
       <!-- <span slot="footer" class="dialog-footer">
@@ -101,8 +101,9 @@ export default {
     async toGrade() {
       // this.dialogVisible = false;
       this.gradeRes = await getResponse(this.form.value, this.form.textarea);
+      const cleanedString = this.gradeRes.replace(/[\u0000-\u001F\u0080-\u009F]/g, ''); // 移除控制字符
       const jsonRegex = /\{(?:[^{}]|(?:\{(?:[^{}]|[^{}]*\}))*[^{}]*)*\}/g;
-      const jsonMatches = this.gradeRes.match(jsonRegex);
+      const jsonMatches = cleanedString.match(jsonRegex);
       this.gradeRes = JSON.parse(jsonMatches)
       console.log(this.gradeRes);
     },
