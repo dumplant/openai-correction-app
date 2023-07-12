@@ -8,7 +8,7 @@
           <el-cascader v-model="form.value" :options="options"></el-cascader>
         </el-form-item>
         <el-form-item label="作文标题">
-          <el-input v-model="form.title" placeholder="请输入"></el-input>
+          <el-input v-model="form.title" type="textarea" :rows="3" placeholder="请输入"></el-input>
 
         </el-form-item>
         <el-form-item label="作文正文">
@@ -19,7 +19,7 @@
       <span slot="footer" class="dialog-footer">
         <span style="margin-right: 1rem;">字数统计：{{ wordCount }}</span>
         <el-button @click="dialogVisible = false">保 存</el-button>
-        <el-button type="primary" @click="dialogVisible = false">批 改</el-button>
+        <el-button type="primary" @click="toGrade()">批 改</el-button>
       </span>
     </el-dialog>
   </div>
@@ -27,6 +27,8 @@
 
 <script>
 /* eslint-disable */
+import getResponse from '@/utils/GetResponse'
+
 export default {
   data() {
     return {
@@ -38,31 +40,32 @@ export default {
 
       dialogVisible: false,
       options: [{
-        value: 'xiaoxue',
+        value: '小学',
         label: '小学',
       }, {
-        value: 'zhongkao',
+        value: '中考',
         label: '中考',
       }, {
-        value: 'gaokao',
+        value: '高考',
         label: '高考',
       }, {
-        value: 'daxue',
+        value: '大学',
         label: '大学',
         children: [{
-          value: 'siji',
+          value: '四级',
           label: '四级'
         }, {
-          value: 'liuji',
+          value: '六级',
           label: '六级'
         }]
       }, {
-        value: 'tofu',
+        value: '托福',
         label: '托福',
       }, {
-        value: 'yasi',
+        value: '雅思',
         label: '雅思',
-      },]
+      },],
+      gradeRes: ''
     };
   },
   computed: {
@@ -74,6 +77,11 @@ export default {
     },
   },
   methods: {
+    async toGrade() {
+      // this.dialogVisible = false;
+      this.gradeRes = await getResponse(this.form.value, this.form.textarea);
+      console.log(this.gradeRes);
+    },
     handleClose(done) {
       this.$confirm('确认关闭？')
         .then(_ => {

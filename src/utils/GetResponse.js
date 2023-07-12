@@ -1,6 +1,6 @@
 // import fetch from 'isomorphic-unfetch';
 
-const getResponse = async (content) => {
+const getResponse = async (type, content) => {
   console.log('content:' + content);
   const response = await fetch('https://api.openai-proxy.com/v1/completions', {
     method: 'POST',
@@ -9,7 +9,10 @@ const getResponse = async (content) => {
       Authorization: `Bearer ${process.env.VUE_APP_OPENAI_API_KEY}`,
     },
     body: JSON.stringify({
-      prompt: `Output the corrected version of this statement: "${content}"`,
+      prompt: `假设你是一名${type}英语作文考官，这是用户提供的一篇${type}作文：${content}。
+你有两个任务：1. 检查单词拼写、纠正标点符号、修正语法错误，为用户提供一个修改全文版本；2. 为用户的作文打分，分数的总分为9分，请从词汇能力、句子能力、篇章能力三个方面给用户打分。
+回答格式：[[{polishedVersion：修改全文版本}], [{ totalScore: 总分分数 }, { vpScore: 词汇能力得分, vpEvaluation: 词汇能力得分}, { spScore: 句子能力得分,, spEvaluation: 句子能力评价}, { vpScore: 篇章能力得分, vpEvaluation: 篇章能力评价 }]]`,
+      // prompt: `Output the corrected version of this statement: "${content}"`,
       // prompt: `translate this content into ${targetLanguage}: "${content}"`,
       temperature: 0.5,
       max_tokens: 2048,
